@@ -5,8 +5,7 @@ using UnityEngine.UI;
 
 public class Arma : MonoBehaviour
 {
-    
-
+    [SerializeField] private ParticleSystem particulas;
     public Camera gamera;
     void Start()
     {
@@ -18,6 +17,7 @@ public class Arma : MonoBehaviour
     {
         if (Input.GetMouseButtonDown(0))
         {
+            
             Ray rayPoint = gamera.ScreenPointToRay(new Vector3(Screen.width / 2f, Screen.height / 2f, 0f));
             RaycastHit alvo;
             if (CMD.municao >= 1)
@@ -34,9 +34,15 @@ public class Arma : MonoBehaviour
                     Debug.Log("Shoot Right");
                 }
             }
-            
+
+            particulas.Play();
+            StartCoroutine("Parar");
 
         }
-        
+        IEnumerator Parar()
+        {
+            yield return new WaitForSeconds(2);
+            particulas.Stop();
+        }
     }
 }
